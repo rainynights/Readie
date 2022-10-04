@@ -4,6 +4,13 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
+    <!-- Readie Purples -->
+    <Color x:Key="ReadiePurpleDark">#786FA6</Color>
+    <Color x:Key="ReadiePurpleLight">#B6AFDB</Color>
+    <Color x:Key="ReadiePurpleHighlighted">#D1CCE8</Color>
+    <Color x:Key="ReadiePurpleBackground">#303952</Color>
+
+    <!-- Maui Colors -->
     <Color x:Key="Primary">#512BD4</Color>
     <Color x:Key="Secondary">#DFD8F7</Color>
     <Color x:Key="Tertiary">#2B0B98</Color>
