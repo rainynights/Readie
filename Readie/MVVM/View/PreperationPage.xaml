@@ -39,24 +39,23 @@
                 HorizontalOptions="Center"
                 Margin="80"/>
 
-        <Label Text="Okuma Hizi:"
+        <Entry Placeholder="Okuma hiziniz..."
                Grid.Row="1"
-               WidthRequest="120"
+               Keyboard="Numeric"
+               WidthRequest="200"
                HeightRequest="20"
-               Background="Transparent"
                VerticalOptions="Start"
                HorizontalOptions="Center"
-               Margin="0,150,90,0"/>
+               Margin="0,150,0,0"/>
 
-
-        <Label Text="Kelime Sayisi:"
+        <Entry Text="Kelime sayisi..."
                Grid.Row="1"
-               WidthRequest="120"
+               Keyboard="Numeric"
+               WidthRequest="200"
                HeightRequest="20"
-               Background="Transparent"
                VerticalOptions="Start"
                HorizontalOptions="Center"
-               Margin="0,180,90,0"/>
+               Margin="0,200,0,0"/>
 
         <Button Text="OKU"
                 Grid.Row="1"

@@ -10,12 +10,10 @@ public static class MauiProgram
 			.UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
 			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				fonts.AddFont("PTMono-Regular.ttf", "PTMonoRegular");
 			});
 
-		Routing.RegisterRoute("testPage", typeof(PreperationPage));
+		Routing.RegisterRoute("testPage", typeof(TextSelectionPage));
 
 		return builder.Build();
 	}
