@@ -2,9 +2,17 @@
 
 public partial class MainPage : ContentPage
 {
-	public MainPage()
-	{
-		InitializeComponent();
-	}
-}
+    public Command ReadCommand { get; }
 
+    public MainPage()
+    {
+        ReadCommand = new Command(Read);
+        InitializeComponent();
+        BindingContext = this;
+    }
+
+    private async void Read()
+    {
+        await Shell.Current.GoToAsync("testPage");
+    }
+}

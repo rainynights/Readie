@@ -1,11 +1,12 @@
-﻿namespace Readie;
+﻿using Readie.MVVM.View;
+
+namespace Readie;
 
 public static class MauiProgram
 {
 	public static MauiApp CreateMauiApp()
 	{
-		var builder = MauiApp.CreateBuilder();
-		builder
+		MauiAppBuilder builder = MauiApp.CreateBuilder()
 			.UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
 			{
@@ -13,6 +14,8 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 				fonts.AddFont("PTMono-Regular.ttf", "PTMonoRegular");
 			});
+
+		Routing.RegisterRoute("testPage", typeof(PreperationPage));
 
 		return builder.Build();
 	}
