@@ -1,15 +1,24 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Readie.MVVM.ViewModel;
 
-public abstract partial class ViewModelBase : ObservableObject
+public abstract class ViewModelBase : INotifyPropertyChanged
 {
-    [ObservableProperty]
-    private string _title;
+    public event PropertyChangedEventHandler PropertyChanged;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(IsNotBusy))]
-    private bool _isBusy;
+    protected virtual void OnPropertyChanged([CallerMemberName] string name = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+    }
 
-    public bool IsNotBusy => !_isBusy;
+    protected virtual bool SetProperty<T>(ref T source, T value, [CallerMemberName] string name = null)
+    {
+        if (EqualityComparer<T>.Default.Equals(source, value))
+            return false;
+
+        source = value;
+        OnPropertyChanged(name);
+        return true;
+    }
 }
