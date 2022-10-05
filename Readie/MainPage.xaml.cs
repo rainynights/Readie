@@ -13,6 +13,6 @@ public partial class MainPage : ContentPage
 
     private async void Read()
     {
-        await Shell.Current.GoToAsync("testPage");
+        await Shell.Current.GoToAsync("Preperation");
     }
 }
