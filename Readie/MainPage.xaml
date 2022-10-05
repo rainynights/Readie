@@ -17,7 +17,6 @@
 
             <Label Text="READIE"
                    FontSize="40"
-                   FontFamily="PTMonoRegular"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"
                    Margin="10"/>
@@ -34,7 +33,6 @@
                 Command="{Binding ReadCommand}"
                 Grid.Row="1"
                 FontSize="20"
-                FontFamily="PTMonoRegular"
                 WidthRequest="200"
                 HeightRequest="40"
                 VerticalOptions="Start"
@@ -44,7 +42,6 @@
         <Button Text="BIZE ULASIN"
                 Grid.Row="1"
                 FontSize="20"
-                FontFamily="PTMonoRegular"
                 WidthRequest="200"
                 HeightRequest="40"
                 VerticalOptions="Start"

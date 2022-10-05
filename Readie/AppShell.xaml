@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<Shell
-    x:Class="Readie.AppShell"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Readie"
-    Shell.FlyoutBehavior="Disabled">
+<Shell x:Class="Readie.AppShell"
+       xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:local="clr-namespace:Readie"
+       Shell.FlyoutBehavior="Disabled"
+       x:DataType="local:AppShell">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+    <ShellContent Title="Home"
+                  ContentTemplate="{DataTemplate local:MainPage}"
+                  Route="MainPage" />
+
+    <Shell.TitleView>
+        <StackLayout Background="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}">
+            <Button ImageSource="{AppThemeBinding Light={Binding Moon}, Dark={Binding Sun}}"
+                    Command="{Binding ChangeThemeCommand}"
+                    WidthRequest="50"
+                    HeightRequest="50"
+                    HorizontalOptions="Start"/>
+
+        </StackLayout>
+    </Shell.TitleView>
 
 </Shell>

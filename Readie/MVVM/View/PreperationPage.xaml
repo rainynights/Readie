@@ -9,10 +9,63 @@
             <RowDefinition Height="300"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Label Text="(Preview Text) To be bind"
                Grid.Row="0"
-               Padding="10"/>
-        
+               WidthRequest="300"
+               HeightRequest="300"
+               Margin="20,20,20,0"
+               Padding="12"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               HorizontalTextAlignment="Start"
+               VerticalTextAlignment="Start"/>
+
+        <Button Text="METIN SEC"
+                Grid.Row="1"
+                WidthRequest="200"
+                HeightRequest="40"
+                FontSize="20"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                Margin="30"/>
+
+        <Button Text="DOSYA SEC"
+                Grid.Row="1"
+                WidthRequest="200"
+                HeightRequest="40"
+                FontSize="20"
+                VerticalOptions="Start"
+                HorizontalOptions="Center"
+                Margin="80"/>
+
+        <Label Text="Okuma Hizi:"
+               Grid.Row="1"
+               WidthRequest="120"
+               HeightRequest="20"
+               Background="Transparent"
+               VerticalOptions="Start"
+               HorizontalOptions="Center"
+               Margin="0,150,90,0"/>
+
+
+        <Label Text="Kelime Sayisi:"
+               Grid.Row="1"
+               WidthRequest="120"
+               HeightRequest="20"
+               Background="Transparent"
+               VerticalOptions="Start"
+               HorizontalOptions="Center"
+               Margin="0,180,90,0"/>
+
+        <Button Text="OKU"
+                Grid.Row="1"
+                WidthRequest="200"
+                HeightRequest="40"
+                FontSize="20"
+                VerticalOptions="End"
+                HorizontalOptions="Center"
+                Margin="40"/>
+
     </Grid>
 </ContentPage>
