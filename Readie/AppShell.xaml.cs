@@ -3,23 +3,18 @@
 public partial class AppShell : Shell
 {
 	public Command ChangeThemeCommand { get; }
-	
-	public ImageSource Moon { get; }
-	public ImageSource Sun { get; }
+	public string ThemeIcon => (Application.Current.RequestedTheme == AppTheme.Light) ? "sun.png" : "moon.png";
 
 	public AppShell()
 	{
 		ChangeThemeCommand = new Command(ChangeTheme);
-		Moon = "moon.png";
-		Sun = "sun.png";
         InitializeComponent();
 		BindingContext = this;
 	}
 
 	private void ChangeTheme()
 	{
-		Application.Current.UserAppTheme = Application.Current.RequestedTheme == AppTheme.Light
-			? AppTheme.Dark
-			: AppTheme.Light;
+		Application.Current.UserAppTheme = (Application.Current.RequestedTheme == AppTheme.Light) ? AppTheme.Dark : AppTheme.Light;
+		OnPropertyChanged(nameof(ThemeIcon));
     }
 }

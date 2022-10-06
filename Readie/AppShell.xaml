@@ -12,11 +12,15 @@
 
     <Shell.TitleView>
         <StackLayout Background="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}">
-            <Button ImageSource="{AppThemeBinding Light={Binding Moon}, Dark={Binding Sun}}"
-                    Command="{Binding ChangeThemeCommand}"
-                    WidthRequest="50"
-                    HeightRequest="50"
-                    HorizontalOptions="Start"/>
+            <ImageButton Command="{Binding ChangeThemeCommand}"
+                         Source="{Binding ThemeIcon}"
+                         WidthRequest="48"
+                         HeightRequest="48"
+                         HorizontalOptions="Start"
+                         BackgroundColor="Transparent"
+                         BorderColor="Transparent">
+
+            </ImageButton>
 
         </StackLayout>
     </Shell.TitleView>
