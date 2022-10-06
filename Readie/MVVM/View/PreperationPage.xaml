@@ -8,69 +8,53 @@
     <ContentPage.BindingContext>
         <viewModel:PreperationViewModel/>
     </ContentPage.BindingContext>
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="300"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
 
+    <Grid Padding="32">
         <Label Text="{Binding SelectedTextPreview}"
-               Grid.Row="0"
-               WidthRequest="300"
-               HeightRequest="300"
-               Margin="20,20,20,0"
-               Padding="12"
-               VerticalOptions="Center"
+               WidthRequest="320"
+               HeightRequest="320"
+               VerticalOptions="Start"
                HorizontalOptions="Center"
                HorizontalTextAlignment="Start"
-               VerticalTextAlignment="Start"/>
+               VerticalTextAlignment="Start"
+               Padding="16"/>
 
-        <Button Text="METIN SEC"
-                Command="{Binding SelectTextCommand}"
-                Grid.Row="1"
-                WidthRequest="200"
-                HeightRequest="40"
-                FontSize="20"
-                VerticalOptions="Start"
-                HorizontalOptions="Center"
-                Margin="30"/>
+        <VerticalStackLayout VerticalOptions="End"
+                             HorizontalOptions="Center">
+            
+            <Button Text="METIN SEC"
+                    FontSize="16"
+                    Command="{Binding SelectTextCommand}"
+                    WidthRequest="192"
+                    HeightRequest="36"
+                    Margin="0,0,0,16"/>
 
-        <Button Text="DOSYA SEC"
-                Grid.Row="1"
-                WidthRequest="200"
-                HeightRequest="40"
-                FontSize="20"
-                VerticalOptions="Start"
-                HorizontalOptions="Center"
-                Margin="80"/>
+            <Button Text="DOSYA SEC"
+                    FontSize="16"
+                    Command="{Binding SelectFileCommand}"
+                    WidthRequest="192"
+                    HeightRequest="36"
+                    Margin="0,0,0,16"/>
+            
+            <Entry Placeholder="Okuma hiziniz..."
+                   Keyboard="Numeric"
+                   WidthRequest="192"
+                   HeightRequest="24"
+                   Margin="0,0,0,16"/>
 
-        <Entry Placeholder="Okuma hiziniz..."
-               Grid.Row="1"
-               Keyboard="Numeric"
-               WidthRequest="200"
-               HeightRequest="20"
-               VerticalOptions="Start"
-               HorizontalOptions="Center"
-               Margin="0,150,0,0"/>
+            <Entry Placeholder="Kelime sayisi..."
+                   Keyboard="Numeric"
+                   WidthRequest="192"
+                   HeightRequest="24"
+                   Margin="0,0,0,16"/>
 
-        <Entry Placeholder="Kelime sayisi..."
-               Grid.Row="1"
-               Keyboard="Numeric"
-               WidthRequest="200"
-               HeightRequest="20"
-               VerticalOptions="Start"
-               HorizontalOptions="Center"
-               Margin="0,200,0,0"/>
-
-        <Button Text="OKU"
-                Grid.Row="1"
-                WidthRequest="200"
-                HeightRequest="40"
-                FontSize="20"
-                VerticalOptions="End"
-                HorizontalOptions="Center"
-                Margin="40"/>
-
+            <Button Text="OKU"
+                    FontSize="16"
+                    Command="{Binding ReadCommand}"
+                    WidthRequest="192"
+                    HeightRequest="36"
+                    VerticalOptions="End"
+                    HorizontalOptions="Center"/>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

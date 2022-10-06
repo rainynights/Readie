@@ -5,14 +5,13 @@ namespace Readie.MVVM.ViewModel;
 [QueryProperty(nameof(SelectedText), nameof(SelectedText))]
 public class PreperationViewModel : ViewModelBase
 {
+    private Text _selectedText;
+
     public Command SelectTextCommand { get; }
     public Command SelectFileCommand { get; }
     public Command ReadCommand { get; }
 
     public string SelectedTextPreview => _selectedText?.GetPreview() ?? Text.DefaultPreview;
-
-    private Text _selectedText;
-
     public Text SelectedText
     {
         get => _selectedText;
@@ -27,6 +26,8 @@ public class PreperationViewModel : ViewModelBase
     public PreperationViewModel()
     {
         SelectTextCommand = new Command(SelectText);
+        SelectFileCommand = new Command(SelectFile);
+        ReadCommand = new Command(Read);
     }
 
     private async void SelectText()
@@ -39,8 +40,8 @@ public class PreperationViewModel : ViewModelBase
 
     }
 
-    private void Read()
+    private async void Read()
     {
-
+        await Shell.Current.GoToAsync("WordReading");
     }
 }

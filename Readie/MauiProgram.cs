@@ -17,6 +17,7 @@ public static class MauiProgram
 
 		Routing.RegisterRoute("Preperation", typeof(PreperationPage));
 		Routing.RegisterRoute("TextSelection", typeof(TextSelectionPage));
+		Routing.RegisterRoute("WordReading", typeof(WordReadingPage));
 
 		return builder.Build();
 	}

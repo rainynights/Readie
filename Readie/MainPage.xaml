@@ -5,47 +5,38 @@
              x:Class="Readie.MainPage"
              x:DataType="local:MainPage">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="200" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <HorizontalStackLayout Grid.Row="0"
-                               VerticalOptions="Center"
+    <Grid Padding="32">
+        <HorizontalStackLayout VerticalOptions="Start"
                                HorizontalOptions="Center">
 
             <Label Text="READIE"
-                   FontSize="40"
+                   FontSize="36"
+                   Background="Transparent"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"
-                   Margin="10"/>
+                   Margin="16"/>
 
             <Image Source="icon.png"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"
-                   WidthRequest="100"
-                   HeightRequest="100"
-                   Margin="10"/>
+                   WidthRequest="96"
+                   HeightRequest="96"/>
         </HorizontalStackLayout>
 
-        <Button Text="OKU"
-                Command="{Binding ReadCommand}"
-                Grid.Row="1"
-                FontSize="20"
-                WidthRequest="200"
-                HeightRequest="40"
-                VerticalOptions="Start"
-                HorizontalOptions="Center"
-                Margin="0,40,0,0"/>
+        <VerticalStackLayout VerticalOptions="End"
+                             HorizontalOptions="Center">
+            
+            <Button Text="OKU"
+                    Command="{Binding ReadCommand}"
+                    FontSize="16"
+                    WidthRequest="192"
+                    HeightRequest="36"
+                    Margin="0,0,0,16"/>
 
-        <Button Text="BIZE ULASIN"
-                Grid.Row="1"
-                FontSize="20"
-                WidthRequest="200"
-                HeightRequest="40"
-                VerticalOptions="Start"
-                HorizontalOptions="Center"
-                Margin="0,90,0,0"/>
+            <Button Text="BIZE ULASIN"
+                    FontSize="16"
+                    WidthRequest="192"
+                    HeightRequest="36"/>
+        </VerticalStackLayout>
     </Grid>
 </ContentPage>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModel="clr-namespace:Readie.MVVM.ViewModel"
+             x:Class="Readie.MVVM.View.WordReadingPage"
+             Title="WordReadingPage"
+             x:DataType="viewModel:WordReadingViewModel">
+
+    <ContentPage.BindingContext>
+        <viewModel:WordReadingViewModel/>
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <ImageButton Source="previous.png"
+                     WidthRequest="48"
+                     HeightRequest="48"
+                     VerticalOptions="Start"
+                     HorizontalOptions="Start"
+                     Margin="16"
+                     CornerRadius="32"/>
+
+        <Label Text="Lorem ipsum"
+               WidthRequest="300"
+               HeightRequest="300"
+               VerticalOptions="Center"
+               HorizontalOptions="Center"
+               Background="Transparent"
+               FontSize="40"
+               VerticalTextAlignment="Center"
+               HorizontalTextAlignment="Center"/>
+
+        <ImageButton Source="first.png"
+                     WidthRequest="48"
+                     HeightRequest="48"
+                     VerticalOptions="End"
+                     HorizontalOptions="Start"
+                     Margin="16,0,0,16"
+                     CornerRadius="32"/>
+
+        <ImageButton Source="previous.png"
+                     WidthRequest="48"
+                     HeightRequest="48"
+                     VerticalOptions="End"
+                     HorizontalOptions="Start"
+                     Margin="80,0,0,16"
+                     CornerRadius="32"/>
+
+        <Ellipse WidthRequest="64"
+                 HeightRequest="64"
+                 VerticalOptions="End"
+                 HorizontalOptions="Center"
+                 Margin="0,0,0,16"
+                 Fill="#b6afdb"/>
+        
+        <ImageButton WidthRequest="64"
+                     HeightRequest="64"
+                     VerticalOptions="End"
+                     HorizontalOptions="Center"
+                     Margin="0,0,0,16"
+                     CornerRadius="64"
+                     Command="{Binding TriggerPlayPauseCommand}">
+            
+            <ImageButton.Style>
+                <Style TargetType="ImageButton">
+                    <Style.Triggers>
+                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsPlaying}" Value="True">
+                            <Setter Property="Source" Value="pause.png" />
+                        </DataTrigger>
+                        <DataTrigger TargetType="ImageButton" Binding="{Binding IsPlaying}" Value="False">
+                            <Setter Property="Source" Value="play.png" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ImageButton.Style>
+        </ImageButton>
+
+        <ImageButton Source="next.png"
+                     WidthRequest="48"
+                     HeightRequest="48"
+                     VerticalOptions="End"
+                     HorizontalOptions="End"
+                     Margin="0,0,80,16"
+                     CornerRadius="32"/>
+
+        <ImageButton Source="last.png"
+                     WidthRequest="48"
+                     HeightRequest="48"
+                     VerticalOptions="End"
+                     HorizontalOptions="End"
+                     Margin="0,0,16,16"
+                     CornerRadius="32"/>
+    </Grid>
+</ContentPage>
