@@ -16,7 +16,7 @@ public class TextSelectionViewModel : ViewModelBase
         SelectCommand = new Command<Text>(Select);
 
         // TODO
-        Texts = new Text[] { new Text { Pages = new string[] { "Loremcim ipsumar mısın?" }, Title = "Deneme" } };
+        Texts = new Text[] { new Text { Pages = new string[] { "Loremcim ipsumar mısın?\n" , "Loremcim ipsumar mısın?\n", "Loremcim ipsumar mısın?\n", "Loremcim ipsumar mısın?\n" }, Title = "Deneme" } };
         OnPropertyChanged(nameof(Texts));
     }
 

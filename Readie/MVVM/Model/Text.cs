@@ -7,6 +7,14 @@ public class Text
     public string Title { get; set; }
     public string[] Pages { get; set; }
 
+    //TODO düzelt bunu
+    public string AllPagesAsString
+    {
+        get
+        {
+            return string.Join(" ", Pages);
+        }
+    }
     private const int MaxPreviewLength = 100;
     //private const int MaxPageLength = 800;
 
@@ -15,7 +23,7 @@ public class Text
         if (Pages.Length < 0)
             return null;
 
-        string pagesString = string.Join(" ", Pages);
+        string pagesString = AllPagesAsString;
 
         if (pagesString.Length < MaxPreviewLength)
             return pagesString + "...";
@@ -24,7 +32,8 @@ public class Text
         for (int i = MaxPreviewLength; i <= Math.Clamp(MaxPreviewLength + 15, 0, pagesString.Length); i++)
         {
             maxPreviewLength = i;
-            if (pagesString[i] == ' ' || pagesString[i] == '\r' || pagesString[i] == '\n')
+
+            if (pagesString[i] == ' ')
                 break;
         }
 

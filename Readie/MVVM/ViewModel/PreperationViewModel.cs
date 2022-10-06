@@ -42,6 +42,10 @@ public class PreperationViewModel : ViewModelBase
 
     private async void Read()
     {
-        await Shell.Current.GoToAsync("WordReading");
+        await Shell.Current.GoToAsync("WordReading", parameters: new Dictionary<string, object>
+        {
+            {"Text" ,SelectedText },
+            {"ReadingOptions", new ReadingOptions() }
+        });
     }
 }

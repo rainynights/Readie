@@ -19,7 +19,7 @@
                      Margin="16"
                      CornerRadius="32"/>
 
-        <Label Text="Lorem ipsum"
+        <Label Text="{Binding WordsToDisplay}"
                WidthRequest="300"
                HeightRequest="300"
                VerticalOptions="Center"
@@ -51,7 +51,7 @@
                  HorizontalOptions="Center"
                  Margin="0,0,0,16"
                  Fill="#b6afdb"/>
-        
+
         <ImageButton WidthRequest="64"
                      HeightRequest="64"
                      VerticalOptions="End"
@@ -59,7 +59,7 @@
                      Margin="0,0,0,16"
                      CornerRadius="64"
                      Command="{Binding TriggerPlayPauseCommand}">
-            
+
             <ImageButton.Style>
                 <Style TargetType="ImageButton">
                     <Style.Triggers>
