@@ -15,7 +15,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Text="{Binding PreviewText}"
+        <Label Text="{Binding SelectedTextPreview}"
                Grid.Row="0"
                WidthRequest="300"
                HeightRequest="300"
