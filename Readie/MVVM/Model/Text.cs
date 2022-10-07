@@ -1,4 +1,7 @@
-﻿namespace Readie.MVVM.Model;
+﻿using System.Text;
+using System.Text.RegularExpressions;
+
+namespace Readie.MVVM.Model;
 
 public class Text
 {
@@ -7,14 +10,45 @@ public class Text
     public string Title { get; set; }
     public string[] Pages { get; set; }
 
-    //TODO düzelt bunu
-    public string AllPagesAsString
+    private string[] _allPagesAsWords;
+    public string[] AllPagesAsWords
     {
         get
         {
-            return string.Join(" ", Pages);
+            if (AllPagesAsString == null)
+                return null;
+
+            if (_allPagesAsWords == null)
+                _allPagesAsWords = AllPagesAsString.Split(" ");
+
+            return _allPagesAsWords;
         }
     }
+
+    private string AllPagesAsString
+    {
+        get
+        {
+            if (Pages == null || Pages.Any() == false)
+                return null;
+
+            StringBuilder pagesStringBuiler = new StringBuilder();
+            foreach (var page in Pages)
+            {
+                if (string.IsNullOrWhiteSpace(page))
+                    continue;
+
+                string modifiedPage = page.Replace("\n", " ").Replace("\r", " ");
+                modifiedPage = Regex.Replace(modifiedPage, @"\s+", " ");
+                modifiedPage = modifiedPage.TrimEnd();
+
+                pagesStringBuiler.Append(modifiedPage + " ");
+            }
+
+            return pagesStringBuiler.ToString().TrimEnd();
+        }
+    }
+
     private const int MaxPreviewLength = 100;
     //private const int MaxPageLength = 800;
 

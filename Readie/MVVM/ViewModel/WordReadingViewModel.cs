@@ -1,9 +1,4 @@
 ﻿using Readie.MVVM.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Readie.MVVM.ViewModel;
 
@@ -24,19 +19,7 @@ public class WordReadingViewModel : ViewModelBase
         set
         {
             _text = value;
-            WordsToDisplay = _text?.Pages[0].Split(" ")[0] ?? "No text";
-            OnPropertyChanged();
-        }
-    }
-
-
-    private int _wordIndex;
-    public int WordIndex
-    {
-        get => _wordIndex;
-        set
-        {
-            _wordIndex = value;
+            WordsToDisplay = _text?.AllPagesAsWords[ReadingOptions.StepIndex] ?? "No text";
             OnPropertyChanged();
         }
     }
@@ -52,7 +35,6 @@ public class WordReadingViewModel : ViewModelBase
         }
     }
 
-
     public WordReadingViewModel()
     {
         TriggerPlayPauseCommand = new Command(TriggerPlayPause);
@@ -61,5 +43,27 @@ public class WordReadingViewModel : ViewModelBase
     private void TriggerPlayPause()
     {
         SetProperty<bool>(ref _isPlaying, !_isPlaying, nameof(IsPlaying));
+
+        _ = DisplayUntilStops();
+    }
+
+    private async Task DisplayUntilStops()
+    {
+        int totalStepCount = (int)Text.AllPagesAsWords.Length / ReadingOptions.WordCountPerStep;
+        if (Text.AllPagesAsWords.Length % ReadingOptions.WordCountPerStep > 0)
+            totalStepCount++;
+
+        while (IsPlaying)
+        {
+            int startIndex = ReadingOptions.StepIndex * ReadingOptions.WordCountPerStep;
+            if (ReadingOptions.StepIndex != totalStepCount - 1)
+                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)]);
+            else
+                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
+
+            // TODO wpm yap
+            await Task.Delay(1000 / ReadingOptions.Speed);
+            ReadingOptions = new ReadingOptions(ReadingOptions.Speed, ReadingOptions.StepIndex + 1, ReadingOptions.WordCountPerStep);
+        }
     }
 }
