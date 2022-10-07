@@ -19,7 +19,21 @@ public class WordReadingViewModel : ViewModelBase
         set
         {
             _text = value;
-            WordsToDisplay = _text?.AllPagesAsWords[ReadingOptions.StepIndex] ?? "No text";
+            WordsToDisplay = _text?.AllPagesAsWords[ReadingOptions.WordIndex] ?? "No text";
+
+            if (_text == null)
+                return;
+
+            // TODO burası kod tekrarı hoş değil
+            int totalStepCount = (int)Text.AllPagesAsWords.Length / ReadingOptions.WordCountPerStep;
+            int stepIndex = (int)ReadingOptions.WordIndex / ReadingOptions.WordCountPerStep;
+            int startIndex = stepIndex * ReadingOptions.WordCountPerStep;
+            if (stepIndex != totalStepCount - 1)
+                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)]);
+            else
+                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
+            // ------
+
             OnPropertyChanged();
         }
     }
@@ -47,6 +61,7 @@ public class WordReadingViewModel : ViewModelBase
 
         SetProperty<bool>(ref _isPlaying, !_isPlaying, nameof(IsPlaying));
 
+        // TODO cancel all other tasks
         _ = DisplayUntilStops();
     }
 
@@ -56,26 +71,29 @@ public class WordReadingViewModel : ViewModelBase
         if (Text.AllPagesAsWords.Length % ReadingOptions.WordCountPerStep > 0)
             totalStepCount++;
 
+        int stepIndex = (int)ReadingOptions.WordIndex / ReadingOptions.WordCountPerStep;
+
         while (IsPlaying)
         {
-            int startIndex = ReadingOptions.StepIndex * ReadingOptions.WordCountPerStep;
-            if (ReadingOptions.StepIndex != totalStepCount - 1)
+            int startIndex = stepIndex * ReadingOptions.WordCountPerStep;
+            if (stepIndex != totalStepCount - 1)
                 WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)]);
             else
                 WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
 
-            if (ReadingOptions.StepIndex == totalStepCount - 1)
+            stepIndex++;
+            if (stepIndex == totalStepCount)
             {
-                ReadingOptions.StepIndex = 0;
+                stepIndex = 1; // Will subtract one
                 SetProperty<bool>(ref _isPlaying, false, nameof(IsPlaying));
                 break;
             }
 
             // TODO wpm yap
             await Task.Delay(1000 / ReadingOptions.Speed);
-            ReadingOptions.StepIndex++;
         }
 
+        ReadingOptions.WordIndex = (stepIndex - 1) * ReadingOptions.WordCountPerStep;
         // TODO save step index vs.
     }
 }

@@ -45,7 +45,7 @@ public class PreperationViewModel : ViewModelBase
         await Shell.Current.GoToAsync("WordReading", parameters: new Dictionary<string, object>
         {
             {"Text" ,SelectedText },
-            {"ReadingOptions", new ReadingOptions() }
+            {"ReadingOptions", new ReadingOptions(4, 0 ,2) }
         });
     }
 }
