@@ -2,8 +2,8 @@
 
 namespace Readie.MVVM.ViewModel;
 
-[QueryProperty(nameof(Text), nameof(Text))]
 [QueryProperty(nameof(ReadingOptions), nameof(ReadingOptions))]
+[QueryProperty(nameof(Text), nameof(Text))]
 public class WordReadingViewModel : ViewModelBase
 {
     public Command TriggerPlayPauseCommand { get; }
@@ -42,6 +42,9 @@ public class WordReadingViewModel : ViewModelBase
 
     private void TriggerPlayPause()
     {
+        if (Text == null)
+            return;
+
         SetProperty<bool>(ref _isPlaying, !_isPlaying, nameof(IsPlaying));
 
         _ = DisplayUntilStops();
@@ -61,9 +64,18 @@ public class WordReadingViewModel : ViewModelBase
             else
                 WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
 
+            if (ReadingOptions.StepIndex == totalStepCount - 1)
+            {
+                ReadingOptions.StepIndex = 0;
+                SetProperty<bool>(ref _isPlaying, false, nameof(IsPlaying));
+                break;
+            }
+
             // TODO wpm yap
             await Task.Delay(1000 / ReadingOptions.Speed);
-            ReadingOptions = new ReadingOptions(ReadingOptions.Speed, ReadingOptions.StepIndex + 1, ReadingOptions.WordCountPerStep);
+            ReadingOptions.StepIndex++;
         }
+
+        // TODO save step index vs.
     }
 }

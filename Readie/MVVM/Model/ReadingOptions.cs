@@ -6,13 +6,18 @@ using System.Threading.Tasks;
 
 namespace Readie.MVVM.Model;
 
-public struct ReadingOptions
+public class ReadingOptions
 {
-    public int Speed { get; set; }
-    public int StepIndex { get; set; }
-    public int WordCountPerStep { get; set; }
+    public int Speed { get; set; } = 3;
+    public int StepIndex { get; set; } = 0;
+    public int WordCountPerStep { get; set; } = 1;
 
-    public ReadingOptions(int speed = 1, int stepIndex = 0, int wordCountPerStep = 1)
+    public ReadingOptions()
+    {
+
+    }
+
+    public ReadingOptions(int speed, int stepIndex, int wordCountPerStep)
     {
         Speed = speed;
         StepIndex = stepIndex;
