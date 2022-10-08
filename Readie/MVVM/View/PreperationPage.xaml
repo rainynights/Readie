@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel ="clr-namespace:Readie.MVVM.ViewModel"
+             xmlns:controls="clr-namespace:Readie.Controls"
              x:Class="Readie.MVVM.View.PreperationPage"
              Title="Preperation Page">
 
@@ -35,7 +36,17 @@
                     WidthRequest="192"
                     HeightRequest="36"
                     Margin="0,0,0,16"/>
-            
+
+            <controls:NumericUpDown Value="{Binding WordsPerMinute, Mode=TwoWay}"
+                                    MinValue="30"
+                                    MaxValue="320"
+                                    Increment="10"
+                                    BackColor="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}"
+                                    AccentColor="{AppThemeBinding Light={StaticResource LightAccent}, Dark={StaticResource DarkAccent}}"
+                                    FontSize="16"
+                                    FontFamily="PTMonoRegular"
+                                    Margin="0,0,0,16"/>
+
             <Entry Placeholder="Okuma hiziniz..."
                    Keyboard="Numeric"
                    WidthRequest="192"

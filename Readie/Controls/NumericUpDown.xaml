@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Readie.Controls"
+             x:Class="Readie.Controls.NumericUpDown"
+             x:DataType="controls:NumericUpDown"
+             Padding="0"
+             Background="Transparent"
+             MinimumWidthRequest="192"
+             MinimumHeightRequest="64">
+
+    <Frame CornerRadius="16"
+           Background="{Binding BackColor}"
+           VerticalOptions="Center"
+           HorizontalOptions="Center"
+           Padding="8,4,8,4">
+
+        <VerticalStackLayout Background="Transparent"
+                             VerticalOptions="Center"
+                             HorizontalOptions="Center">
+
+            <Frame CornerRadius="8"
+                   Padding="8,4,8,4"
+                   VerticalOptions="Start"
+                   HorizontalOptions="Center"
+                   Background="{Binding AccentColor}">
+
+                <Label Text="Test"
+                       Background="Transparent"
+                       Padding="4,0,4,0"/>
+            </Frame>
+
+            <HorizontalStackLayout Background="Transparent"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center">
+
+                <Button Command="{Binding DecrementCommand}"
+                        FontSize="{Binding FontSize}"
+                        FontFamily="{Binding FontFamily}"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center"
+                        Text="-"
+                        CornerRadius="8"/>
+
+                <Label Text="{Binding Value}"
+                        FontSize="{Binding FontSize}"
+                        FontFamily="{Binding FontFamily}"
+                        MinimumWidthRequest="40"
+                        Background="Transparent"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        VerticalTextAlignment="Center"
+                        Padding="32,4,32,0"/>
+
+                <Button Command="{Binding IncrementCommand}"
+                        FontSize="{Binding FontSize}"
+                        FontFamily="{Binding FontFamily}"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        Text="+"
+                        CornerRadius="8"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Frame>
+</ContentView>

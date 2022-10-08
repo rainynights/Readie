@@ -23,6 +23,8 @@ public class PreperationViewModel : ViewModelBase
         }
     }
 
+    public int WordsPerMinute { get; set; } = 30;
+
     public PreperationViewModel()
     {
         SelectTextCommand = new Command(SelectText);
