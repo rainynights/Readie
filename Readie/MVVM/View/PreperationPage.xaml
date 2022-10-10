@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModel ="clr-namespace:Readie.MVVM.ViewModel"
-             xmlns:controls="clr-namespace:Readie.Controls"
              x:Class="Readie.MVVM.View.PreperationPage"
              Title="Preperation Page">
 
@@ -13,7 +12,7 @@
     <Grid Padding="32">
         <Label Text="{Binding SelectedTextPreview}"
                WidthRequest="320"
-               HeightRequest="320"
+               HeightRequest="256"
                VerticalOptions="Start"
                HorizontalOptions="Center"
                HorizontalTextAlignment="Start"
@@ -37,35 +36,62 @@
                     HeightRequest="36"
                     Margin="0,0,0,16"/>
 
-            <controls:NumericUpDown Value="{Binding WordsPerMinute, Mode=TwoWay}"
-                                    MinValue="30"
-                                    MaxValue="320"
-                                    Increment="10"
-                                    BackColor="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}"
-                                    AccentColor="{AppThemeBinding Light={StaticResource LightAccent}, Dark={StaticResource DarkAccent}}"
-                                    FontSize="16"
-                                    FontFamily="PTMonoRegular"
-                                    Margin="0,0,0,16"/>
+            <Frame CornerRadius="16"
+                   Background="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   Margin="0,16,0,0"
+                   Padding="16,8,16,16">
 
-            <Entry Placeholder="Okuma hiziniz..."
-                   Keyboard="Numeric"
-                   WidthRequest="192"
-                   HeightRequest="24"
-                   Margin="0,0,0,16"/>
+                <VerticalStackLayout Background="Transparent"
+                                     VerticalOptions="Center"
+                                     HorizontalOptions="Center">
 
-            <Entry Placeholder="Kelime sayisi..."
-                   Keyboard="Numeric"
-                   WidthRequest="192"
-                   HeightRequest="24"
-                   Margin="0,0,0,16"/>
+                    <Frame CornerRadius="8"
+                           Padding="8,4,8,4"
+                           VerticalOptions="Start"
+                           HorizontalOptions="Center"
+                           Background="{AppThemeBinding Light={StaticResource LightAccent}, Dark={StaticResource DarkAccent}}">
+
+                        <Label Text="Dakika Basina Kelime"
+                               Background="Transparent"/>
+                    </Frame>
+
+                    <HorizontalStackLayout Background="Transparent"
+                                           VerticalOptions="End"
+                                           HorizontalOptions="Center">
+
+                        <Button Command="{Binding DecreaseWPMCommand}"
+                                Text="-"
+                                CornerRadius="8"/>
+
+                        <Label Text="{Binding WordsPerMinute}"
+                               MinimumWidthRequest="40"
+                               Background="Transparent"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               Padding="32,4,32,0"/>
+
+                        <Button Command="{Binding IncreaseWPMCommand}"
+                                Text="+"
+                                CornerRadius="8"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <Picker WidthRequest="192"
+                    HeightRequest="36"
+                    SelectedIndex="0"
+                    ItemsSource="{Binding WordsToShow}"
+                    SelectedItem="{Binding SelectedWordsToShow, Mode=OneWayToSource}"
+                    Margin="0,16,0,16"/>
 
             <Button Text="OKU"
                     FontSize="16"
                     Command="{Binding ReadCommand}"
                     WidthRequest="192"
                     HeightRequest="36"
-                    VerticalOptions="End"
-                    HorizontalOptions="Center"/>
+                    Margin="0,16,0,0"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
