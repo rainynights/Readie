@@ -8,7 +8,7 @@ namespace Readie.MVVM.Model;
 
 public class ReadingOptions
 {
-    public int Speed { get; set; } = 3;
+    public int WordsPerMinute { get; set; } = 3;
     public int WordIndex { get; set; } = 0;
     public int WordCountPerStep { get; set; } = 1;
 
@@ -17,9 +17,9 @@ public class ReadingOptions
 
     }
 
-    public ReadingOptions(int speed, int wordIndex, int wordCountPerStep)
+    public ReadingOptions(int wordsPerMinute, int wordIndex, int wordCountPerStep)
     {
-        Speed = speed;
+        WordsPerMinute = wordsPerMinute;
         WordIndex = wordIndex;
         WordCountPerStep = wordCountPerStep;
     }

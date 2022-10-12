@@ -1,4 +1,5 @@
 ﻿using Readie.MVVM.Model;
+using System.Diagnostics;
 
 namespace Readie.MVVM.ViewModel;
 
@@ -61,8 +62,8 @@ public class WordReadingViewModel : ViewModelBase
 
         SetProperty<bool>(ref _isPlaying, !_isPlaying, nameof(IsPlaying));
 
-        // TODO cancel all other tasks
-        _ = DisplayUntilStops();
+        if (IsPlaying)
+            _ = DisplayUntilStops();
     }
 
     private async Task DisplayUntilStops()
@@ -73,27 +74,37 @@ public class WordReadingViewModel : ViewModelBase
 
         int stepIndex = (int)ReadingOptions.WordIndex / ReadingOptions.WordCountPerStep;
 
+        float stepInterval = 60_000 * ReadingOptions.WordCountPerStep / ReadingOptions.WordsPerMinute;
+        bool firstStep = true;
+        Stopwatch stopwatch = Stopwatch.StartNew();
+
         while (IsPlaying)
         {
-            int startIndex = stepIndex * ReadingOptions.WordCountPerStep;
-            if (stepIndex != totalStepCount - 1)
-                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)]);
-            else
-                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
-
-            stepIndex++;
-            if (stepIndex == totalStepCount)
+            if (firstStep || stopwatch.Elapsed.TotalMilliseconds >= stepInterval)
             {
-                stepIndex = 1; // Will subtract one
-                SetProperty<bool>(ref _isPlaying, false, nameof(IsPlaying));
-                break;
+                int startIndex = stepIndex * ReadingOptions.WordCountPerStep;
+                if (stepIndex != totalStepCount - 1)
+                    WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)]);
+                else
+                    WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
+
+                stepIndex++;
+                if (stepIndex == totalStepCount)
+                {
+                    stepIndex = 1; // Will subtract one
+                    SetProperty<bool>(ref _isPlaying, false, nameof(IsPlaying));
+                    break;
+                }
+
+                firstStep = false;
+                stopwatch.Restart();
             }
 
-            // TODO wpm yap
-            await Task.Delay(1000 / ReadingOptions.Speed);
+            await Task.Delay(1);
         }
 
         ReadingOptions.WordIndex = (stepIndex - 1) * ReadingOptions.WordCountPerStep;
         // TODO save step index vs.
+        stopwatch.Stop();
     }
 }

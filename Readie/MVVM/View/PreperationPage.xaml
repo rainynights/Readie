@@ -82,8 +82,8 @@
             <Picker WidthRequest="192"
                     HeightRequest="36"
                     SelectedIndex="0"
-                    ItemsSource="{Binding WordsToShow}"
-                    SelectedItem="{Binding SelectedWordsToShow, Mode=OneWayToSource}"
+                    ItemsSource="{Binding WordCountsPerStep}"
+                    SelectedItem="{Binding SelectedWordCountPerStep}"
                     Margin="0,16,0,16"/>
 
             <Button Text="OKU"

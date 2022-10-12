@@ -7,7 +7,7 @@ public class PreperationViewModel : ViewModelBase
 {
     public const int Increment = 10;
     public const int MinWordsPerMinute = 30;
-    public const int MaxWordsPerMinute = 320;
+    public const int MaxWordsPerMinute = 500;
 
     private Text _selectedText;
     private int _wordsPerMinute;
@@ -30,8 +30,8 @@ public class PreperationViewModel : ViewModelBase
         set => SetProperty(ref _wordsPerMinute, value);
     }
 
-    public int[] WordsToShow { get; } = new[] { 1, 2, 3 };
-    public int SelectedWordsToShow { get; set; }
+    public int[] WordCountsPerStep { get; } = new[] { 1, 2, 3, 4 };
+    public int SelectedWordCountPerStep { get; set; }
 
     public Command SelectTextCommand { get; }
     public Command SelectFileCommand { get; }
@@ -45,9 +45,12 @@ public class PreperationViewModel : ViewModelBase
         SelectFileCommand = new Command(SelectFile);
         ReadCommand = new Command(Read);
 
-        _wordsPerMinute = MinWordsPerMinute;
+        _wordsPerMinute = 220;
         DecreaseWPMCommand = new Command(() => WordsPerMinute = Math.Clamp(WordsPerMinute - Increment, MinWordsPerMinute, MaxWordsPerMinute));
         IncreaseWPMCommand = new Command(() => WordsPerMinute = Math.Clamp(WordsPerMinute + Increment, MinWordsPerMinute, MaxWordsPerMinute));
+
+        SelectedWordCountPerStep = 1;
+        OnPropertyChanged(nameof(SelectedWordCountPerStep));
     }
 
     private async void SelectText()
@@ -65,7 +68,7 @@ public class PreperationViewModel : ViewModelBase
         await Shell.Current.GoToAsync("WordReading", parameters: new Dictionary<string, object>
         {
             {"Text" ,SelectedText },
-            {"ReadingOptions", new ReadingOptions(4, 0 ,2) }
+            {"ReadingOptions", new ReadingOptions(WordsPerMinute, 0 ,SelectedWordCountPerStep) }
         });
     }
 }
