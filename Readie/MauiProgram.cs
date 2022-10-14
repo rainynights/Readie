@@ -13,8 +13,6 @@ public static class MauiProgram
 				fonts.AddFont("PTMono-Regular.ttf", "PTMonoRegular");
 			});
 
-		builder.Services.AddSingleton<PreperationPage>();
-
 		Routing.RegisterRoute("Preperation", typeof(PreperationPage));
 		Routing.RegisterRoute("TextSelection", typeof(TextSelectionPage));
 		Routing.RegisterRoute("WordReading", typeof(WordReadingPage));

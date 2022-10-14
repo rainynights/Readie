@@ -1,58 +1,50 @@
 ﻿using Readie.MVVM.Model;
+using Readie.Services;
 using System.Diagnostics;
 
 namespace Readie.MVVM.ViewModel;
 
-[QueryProperty(nameof(ReadingOptions), nameof(ReadingOptions))]
-[QueryProperty(nameof(Text), nameof(Text))]
 public class WordReadingViewModel : ViewModelBase
 {
-    public Command TriggerPlayPauseCommand { get; }
+    public Text Text { get; }
     public ReadingOptions ReadingOptions { get; set; }
-    public bool IsPlaying => _isPlaying;
+    public Command TriggerPlayPauseCommand { get; }
 
-    private bool _isPlaying;
-
-    private Text _text;
-    public Text Text
-    {
-        get => _text;
-        set
-        {
-            _text = value;
-            WordsToDisplay = _text?.AllPagesAsWords[ReadingOptions.WordIndex] ?? "No text";
-
-            if (_text == null)
-                return;
-
-            // TODO burası kod tekrarı hoş değil
-            int totalStepCount = (int)Text.AllPagesAsWords.Length / ReadingOptions.WordCountPerStep;
-            int stepIndex = (int)ReadingOptions.WordIndex / ReadingOptions.WordCountPerStep;
-            int startIndex = stepIndex * ReadingOptions.WordCountPerStep;
-            if (stepIndex != totalStepCount - 1)
-                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)]);
-            else
-                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
-            // ------
-
-            OnPropertyChanged();
-        }
-    }
+    public bool IsPlaying { get; set; }
 
     private string _wordsToDisplay;
     public string WordsToDisplay
     {
         get => _wordsToDisplay;
-        set
-        {
-            _wordsToDisplay = value;
-            OnPropertyChanged();
-        }
+        set => SetProperty(ref _wordsToDisplay, value);
     }
 
     public WordReadingViewModel()
     {
+        Text = ConfigurationService.Text;
+        ReadingOptions = ConfigurationService.ReadingOptions;
+
+        InitializeWordsToDisplay();
+
         TriggerPlayPauseCommand = new Command(TriggerPlayPause);
+    }
+
+    private void InitializeWordsToDisplay()
+    {
+        WordsToDisplay = Text?.AllPagesAsWords[ReadingOptions.WordIndex] ?? "No text";
+
+        if (Text == null)
+            return;
+
+        // TODO burası kod tekrarı hoş değil
+        int totalStepCount = (int)Text.AllPagesAsWords.Length / ReadingOptions.WordCountPerStep;
+        int stepIndex = (int)ReadingOptions.WordIndex / ReadingOptions.WordCountPerStep;
+        int startIndex = stepIndex * ReadingOptions.WordCountPerStep;
+        if (stepIndex != totalStepCount - 1)
+            WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)]);
+        else
+            WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
+        // ------
     }
 
     private void TriggerPlayPause()
@@ -60,7 +52,8 @@ public class WordReadingViewModel : ViewModelBase
         if (Text == null)
             return;
 
-        SetProperty<bool>(ref _isPlaying, !_isPlaying, nameof(IsPlaying));
+        IsPlaying = !IsPlaying;
+        OnPropertyChanged(nameof(IsPlaying));
 
         if (IsPlaying)
             _ = DisplayUntilStops();
@@ -92,7 +85,10 @@ public class WordReadingViewModel : ViewModelBase
                 if (stepIndex == totalStepCount)
                 {
                     stepIndex = 1; // Will subtract one
-                    SetProperty<bool>(ref _isPlaying, false, nameof(IsPlaying));
+
+                    IsPlaying = false;
+                    OnPropertyChanged(nameof(IsPlaying));
+
                     break;
                 }
 
@@ -104,7 +100,10 @@ public class WordReadingViewModel : ViewModelBase
         }
 
         ReadingOptions.WordIndex = (stepIndex - 1) * ReadingOptions.WordCountPerStep;
-        // TODO save step index vs.
+
+        ConfigurationService.ReadingOptions = ReadingOptions;
+        ConfigurationService.SaveConfiguration();
+
         stopwatch.Stop();
     }
 }
