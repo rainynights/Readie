@@ -21,8 +21,8 @@ public class WordReadingViewModel : ViewModelBase
 
     public WordReadingViewModel()
     {
-        Text = ConfigurationService.Text;
-        ReadingOptions = ConfigurationService.ReadingOptions;
+        Text = ConfigurationService.ConfigurationData.SelectedText;
+        ReadingOptions = ConfigurationService.ConfigurationData.ReadingOptions;
 
         InitializeWordsToDisplay();
 
@@ -101,8 +101,8 @@ public class WordReadingViewModel : ViewModelBase
 
         ReadingOptions.WordIndex = (stepIndex - 1) * ReadingOptions.WordCountPerStep;
 
-        ConfigurationService.ReadingOptions = ReadingOptions;
-        ConfigurationService.SaveConfiguration();
+        ConfigurationService.ConfigurationData.ReadingOptions = ReadingOptions;
+        _ = ConfigurationService.SaveConfiguration();
 
         stopwatch.Stop();
     }

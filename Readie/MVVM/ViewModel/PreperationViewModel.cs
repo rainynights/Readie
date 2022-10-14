@@ -30,9 +30,9 @@ public class PreperationViewModel : ViewModelBase
         get => _wordsPerMinute;
         set
         {
-            ConfigurationService.ReadingOptions.WordsPerMinute = value;
-            ConfigurationService.SaveConfiguration();
+            ConfigurationService.ConfigurationData.ReadingOptions.WordsPerMinute = value;
             SetProperty(ref _wordsPerMinute, value);
+            _ = ConfigurationService.SaveConfiguration();
         }
     }
 
@@ -42,17 +42,17 @@ public class PreperationViewModel : ViewModelBase
         get => _selectedWordCountPerStep;
         set
         {
-            ConfigurationService.ReadingOptions.WordCountPerStep = value;
-            ConfigurationService.SaveConfiguration();
+            ConfigurationService.ConfigurationData.ReadingOptions.WordCountPerStep = value;
+            _ = ConfigurationService.SaveConfiguration();
             SetProperty(ref _selectedWordCountPerStep, value);
         }
     }
 
     public PreperationViewModel()
     {
-        SelectedText = ConfigurationService.Text;
-        WordsPerMinute = ConfigurationService.ReadingOptions.WordsPerMinute;
-        SelectedWordCountPerStep = ConfigurationService.ReadingOptions.WordCountPerStep;
+        SelectedText = ConfigurationService.ConfigurationData.SelectedText;
+        WordsPerMinute = ConfigurationService.ConfigurationData.ReadingOptions.WordsPerMinute;
+        SelectedWordCountPerStep = ConfigurationService.ConfigurationData.ReadingOptions.WordCountPerStep;
         OnPropertyChanged(nameof(SelectedWordCountPerStep));
 
         ReadCommand = new Command(Read);
