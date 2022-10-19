@@ -11,14 +11,6 @@
     </ContentPage.BindingContext>
 
     <Grid>
-        <ImageButton Source="previous.png"
-                     WidthRequest="48"
-                     HeightRequest="48"
-                     VerticalOptions="Start"
-                     HorizontalOptions="Start"
-                     Margin="16"
-                     CornerRadius="32"/>
-
         <Label Text="{Binding WordsToDisplay}"
                WidthRequest="300"
                HeightRequest="300"

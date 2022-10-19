@@ -6,18 +6,22 @@ namespace Readie.MVVM.Model;
 public class Text
 {
     public const string DefaultPreview = "Preview..";
+
     public string Title { get; set; }
     public string[] Pages { get; set; }
     public string[] AllPagesAsWords
     {
         get
         {
-            var allPagesAsString = GetAllPagesAsString();
-            if (allPagesAsString == null)
-                return null;
-
             if (_allPagesAsWords == null)
+            {
+                var allPagesAsString = GetAllPagesAsString();
+
+                if (allPagesAsString == null)
+                    return null;
+
                 _allPagesAsWords = allPagesAsString.Split(" ");
+            }
 
             return _allPagesAsWords;
         }
@@ -28,7 +32,7 @@ public class Text
 
     private string GetAllPagesAsString()
     {
-        if (Pages == null || Pages.Any() == false)
+        if (Pages == null || Pages.Length == 0)
             return null;
 
         StringBuilder pagesStringBuiler = new StringBuilder();

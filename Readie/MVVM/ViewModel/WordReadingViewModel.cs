@@ -62,6 +62,13 @@ public class WordReadingViewModel : ViewModelBase
         // Retrieve the last step
         int stepIndex = ReadingOptions.WordIndex / ReadingOptions.WordCountPerStep;
 
+        if (initRun)
+        {
+            int startIndex = stepIndex * ReadingOptions.WordCountPerStep;
+            WordsToDisplay = string.Join(' ', (stepIndex != totalStepCount - 1) ? Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)] : Text.AllPagesAsWords[startIndex..]);
+            return;
+        }
+
         bool firstStep = true;
         Stopwatch stopwatch = Stopwatch.StartNew();
         // initRun buraya girmez çünkü IsPlaying'e basılmadı
@@ -70,10 +77,7 @@ public class WordReadingViewModel : ViewModelBase
             if (firstStep || stopwatch.Elapsed.TotalMilliseconds >= stepInterval)
             {
                 int startIndex = stepIndex * ReadingOptions.WordCountPerStep;
-                if (stepIndex != totalStepCount - 1)
-                    WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)]);
-                else
-                    WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
+                WordsToDisplay = string.Join(' ', (stepIndex != totalStepCount - 1) ? Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)] : Text.AllPagesAsWords[startIndex..]);
 
                 stepIndex++;
                 if (stepIndex == totalStepCount)
@@ -91,17 +95,6 @@ public class WordReadingViewModel : ViewModelBase
             }
 
             await Task.Delay(1);
-        }
-
-        if (initRun)
-        {
-            int startIndex = stepIndex * ReadingOptions.WordCountPerStep;
-            if (stepIndex != totalStepCount - 1)
-                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)]);
-            else
-                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
-
-            return;
         }
 
         ReadingOptions.WordIndex = (stepIndex - 1) * ReadingOptions.WordCountPerStep;
