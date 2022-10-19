@@ -4,8 +4,8 @@ using Readie.Services;
 namespace Readie.MVVM.ViewModel;
 public class TextSelectionViewModel : ViewModelBase
 {
-    public Command SelectCommand { get; }
     public Text[] Texts { get; }
+    public Command SelectCommand { get; }
 
     public TextSelectionViewModel()
     {

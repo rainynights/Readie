@@ -8,23 +8,19 @@ public class PreperationViewModel : ViewModelBase
     public const int Increment = 10;
     public const int MinWordsPerMinute = 30;
     public const int MaxWordsPerMinute = 500;
+    public Command ReadCommand { get; set; }
+    public Command SelectTextCommand { get; set; }
+    public Command SelectFileCommand { get; set; }
+    public Command DecreaseWPMCommand { get; set; }
+    public Command IncreaseWPMCommand { get; set; }
     public int[] WordCountsPerStep { get; } = new[] { 1, 2, 3, 4 };
-    public Command SelectTextCommand { get; }
-    public Command SelectFileCommand { get; }
-    public Command ReadCommand { get; }
-    public Command DecreaseWPMCommand { get; }
-    public Command IncreaseWPMCommand { get; }
     public string SelectedTextPreview => SelectedText?.GetPreview() ?? Text.DefaultPreview;
 
-    private Text _selectedText;
     public Text SelectedText
     {
         get => _selectedText;
         set => SetProperty(ref _selectedText, value);
     }
-
-
-    private int _wordsPerMinute;
     public int WordsPerMinute
     {
         get => _wordsPerMinute;
@@ -35,8 +31,6 @@ public class PreperationViewModel : ViewModelBase
             _ = ConfigurationService.SaveConfiguration();
         }
     }
-
-    private int _selectedWordCountPerStep;
     public int SelectedWordCountPerStep
     {
         get => _selectedWordCountPerStep;
@@ -48,18 +42,30 @@ public class PreperationViewModel : ViewModelBase
         }
     }
 
+    private Text _selectedText;
+    private int _wordsPerMinute;
+    private int _selectedWordCountPerStep;
+
     public PreperationViewModel()
     {
-        SelectedText = ConfigurationService.ConfigurationData.SelectedText;
-        WordsPerMinute = ConfigurationService.ConfigurationData.ReadingOptions.WordsPerMinute;
-        SelectedWordCountPerStep = ConfigurationService.ConfigurationData.ReadingOptions.WordCountPerStep;
-        OnPropertyChanged(nameof(SelectedWordCountPerStep));
+        InitializeCommands();
+        InitializeWordSelection();
+    }
 
+    private void InitializeCommands()
+    {
         ReadCommand = new Command(Read);
         SelectTextCommand = new Command(SelectText);
         SelectFileCommand = new Command(SelectFile);
         DecreaseWPMCommand = new Command(() => WordsPerMinute = Math.Clamp(WordsPerMinute - Increment, MinWordsPerMinute, MaxWordsPerMinute));
         IncreaseWPMCommand = new Command(() => WordsPerMinute = Math.Clamp(WordsPerMinute + Increment, MinWordsPerMinute, MaxWordsPerMinute));
+    }
+
+    private void InitializeWordSelection()
+    {
+        SelectedText = ConfigurationService.ConfigurationData.SelectedText;
+        WordsPerMinute = ConfigurationService.ConfigurationData.ReadingOptions.WordsPerMinute;
+        SelectedWordCountPerStep = ConfigurationService.ConfigurationData.ReadingOptions.WordCountPerStep;
     }
 
     private async void SelectText()

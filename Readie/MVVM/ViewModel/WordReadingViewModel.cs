@@ -7,26 +7,25 @@ namespace Readie.MVVM.ViewModel;
 public class WordReadingViewModel : ViewModelBase
 {
     public Text Text { get; }
-    public ReadingOptions ReadingOptions { get; set; }
-    public Command TriggerPlayPauseCommand { get; }
-
     public bool IsPlaying { get; set; }
+    public Command TriggerPlayPauseCommand { get; }
+    public ReadingOptions ReadingOptions { get; set; }
 
-    private string _wordsToDisplay;
     public string WordsToDisplay
     {
         get => _wordsToDisplay;
         set => SetProperty(ref _wordsToDisplay, value);
     }
 
+    private string _wordsToDisplay;
+
     public WordReadingViewModel()
     {
         Text = ConfigurationService.ConfigurationData.SelectedText;
         ReadingOptions = ConfigurationService.ConfigurationData.ReadingOptions;
+        TriggerPlayPauseCommand = new Command(TriggerPlayPause);
 
         InitializeWordsToDisplay();
-
-        TriggerPlayPauseCommand = new Command(TriggerPlayPause);
     }
 
     private void InitializeWordsToDisplay()
@@ -36,15 +35,7 @@ public class WordReadingViewModel : ViewModelBase
         if (Text == null)
             return;
 
-        // TODO burası kod tekrarı hoş değil
-        int totalStepCount = (int)Text.AllPagesAsWords.Length / ReadingOptions.WordCountPerStep;
-        int stepIndex = (int)ReadingOptions.WordIndex / ReadingOptions.WordCountPerStep;
-        int startIndex = stepIndex * ReadingOptions.WordCountPerStep;
-        if (stepIndex != totalStepCount - 1)
-            WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)]);
-        else
-            WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
-        // ------
+        _ = DisplayUntilStops(initRun: true);
     }
 
     private void TriggerPlayPause()
@@ -59,18 +50,21 @@ public class WordReadingViewModel : ViewModelBase
             _ = DisplayUntilStops();
     }
 
-    private async Task DisplayUntilStops()
+    private async Task DisplayUntilStops(bool initRun = false)
     {
-        int totalStepCount = (int)Text.AllPagesAsWords.Length / ReadingOptions.WordCountPerStep;
+        float stepInterval = 60_000 * ReadingOptions.WordCountPerStep / ReadingOptions.WordsPerMinute;
+
+        // Increase step count by one if wordCountPerStep is not a divisor to complete the remainder
+        int totalStepCount = Text.AllPagesAsWords.Length / ReadingOptions.WordCountPerStep;
         if (Text.AllPagesAsWords.Length % ReadingOptions.WordCountPerStep > 0)
             totalStepCount++;
 
-        int stepIndex = (int)ReadingOptions.WordIndex / ReadingOptions.WordCountPerStep;
+        // Retrieve the last step
+        int stepIndex = ReadingOptions.WordIndex / ReadingOptions.WordCountPerStep;
 
-        float stepInterval = 60_000 * ReadingOptions.WordCountPerStep / ReadingOptions.WordsPerMinute;
         bool firstStep = true;
         Stopwatch stopwatch = Stopwatch.StartNew();
-
+        // initRun buraya girmez çünkü IsPlaying'e basılmadı
         while (IsPlaying)
         {
             if (firstStep || stopwatch.Elapsed.TotalMilliseconds >= stepInterval)
@@ -97,6 +91,17 @@ public class WordReadingViewModel : ViewModelBase
             }
 
             await Task.Delay(1);
+        }
+
+        if (initRun)
+        {
+            int startIndex = stepIndex * ReadingOptions.WordCountPerStep;
+            if (stepIndex != totalStepCount - 1)
+                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..(startIndex + ReadingOptions.WordCountPerStep)]);
+            else
+                WordsToDisplay = string.Join(" ", Text.AllPagesAsWords[startIndex..]);
+
+            return;
         }
 
         ReadingOptions.WordIndex = (stepIndex - 1) * ReadingOptions.WordCountPerStep;
