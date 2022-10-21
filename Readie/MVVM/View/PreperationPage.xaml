@@ -37,7 +37,7 @@
                     Margin="0,0,0,16"/>
 
             <Frame CornerRadius="16"
-                   Background="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}"
+                   Background="{StaticResource DarkSecondary}"
                    VerticalOptions="Center"
                    HorizontalOptions="Center"
                    Margin="0,16,0,0"
@@ -51,7 +51,7 @@
                            Padding="8,4,8,4"
                            VerticalOptions="Start"
                            HorizontalOptions="Center"
-                           Background="{AppThemeBinding Light={StaticResource LightAccent}, Dark={StaticResource DarkAccent}}">
+                           Background="{StaticResource DarkAccent}">
 
                         <Label Text="Dakika Basina Kelime"
                                Background="Transparent"/>

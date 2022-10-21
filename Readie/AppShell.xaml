@@ -11,18 +11,8 @@
                   Route="MainPage" />
 
     <Shell.TitleView>
-        <StackLayout Background="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}">
-            <ImageButton Command="{Binding ChangeThemeCommand}"
-                         Source="{Binding ThemeIcon}"
-                         WidthRequest="48"
-                         HeightRequest="48"
-                         HorizontalOptions="Start"
-                         BackgroundColor="Transparent"
-                         BorderColor="Transparent">
-
-            </ImageButton>
-
-        </StackLayout>
+        <Frame Background="{StaticResource DarkSecondary}"
+               CornerRadius="0"/>
     </Shell.TitleView>
 
 </Shell>

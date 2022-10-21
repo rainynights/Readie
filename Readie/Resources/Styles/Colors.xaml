@@ -3,12 +3,6 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- Light Mode -->
-    <Color x:Key="LightPrimary">#F5CBF0</Color>
-    <Color x:Key="LightSecondary">#D57CD0</Color>
-    <Color x:Key="LightAccent">#A54CA0</Color>
-    <Color x:Key="LightTextColor">#200015</Color>
-    
     <!-- Dark Mode -->
     <Color x:Key="DarkPrimary">#350B30</Color>
     <Color x:Key="DarkSecondary">#652B60</Color>

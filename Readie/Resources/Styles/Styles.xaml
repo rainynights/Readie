@@ -4,18 +4,18 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
     <Style TargetType="ContentPage" ApplyToDerivedTypes="True">
-        <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource LightPrimary}, Dark={StaticResource DarkPrimary}}" />
+        <Setter Property="Background" Value="{StaticResource DarkPrimary}" />
     </Style>
 
     <Style TargetType="Label" ApplyToDerivedTypes="True">
-        <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightTextColor}, Dark={StaticResource DarkTextColor}}" />
+        <Setter Property="Background" Value="{StaticResource DarkSecondary}" />
+        <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
         <Setter Property="FontFamily" Value="PTMonoRegular" />
     </Style>
 
     <Style TargetType="Button" ApplyToDerivedTypes="True">
-        <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource LightSecondary}, Dark={StaticResource DarkSecondary}}" />
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LightTextColor}, Dark={StaticResource DarkTextColor}}" />
+        <Setter Property="Background" Value="{StaticResource DarkSecondary}" />
+        <Setter Property="TextColor" Value="{StaticResource DarkTextColor}" />
         <Setter Property="FontFamily" Value="PTMonoRegular" />
         <Setter Property="CornerRadius" Value="16" />
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -24,12 +24,12 @@
                     <VisualState x:Name="Normal"/>
                     <VisualState x:Name="Focused">
                         <VisualState.Setters>
-                            <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource LightAccent}, Dark={StaticResource DarkAccent}}" />
+                            <Setter Property="Background" Value="{StaticResource DarkAccent}" />
                         </VisualState.Setters>
                     </VisualState>
                     <VisualState x:Name="Selected">
                         <VisualState.Setters>
-                            <Setter Property="Background" Value="{AppThemeBinding Light={StaticResource LightAccent}, Dark={StaticResource DarkAccent}}" />
+                            <Setter Property="Background" Value="{StaticResource DarkAccent}" />
                         </VisualState.Setters>
                     </VisualState>
                 </VisualStateGroup>
